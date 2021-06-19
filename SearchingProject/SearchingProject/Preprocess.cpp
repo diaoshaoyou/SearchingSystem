@@ -1,0 +1,242 @@
+#include "Preprocess.h"
+
+int TotalDoc;//total doc number
+int* docLen;//word len of every doc
+vector<int> docList;//all docID
+
+void Preprocess::Run() {
+	docLen = new int[MAX_DOCNUM];
+	for (int i = 0; i < MAX_DOCNUM; i++) {
+		docLen[i] = -1;
+	}
+
+	fstream f("../InvertedIndex.txt", fstream::in);
+	bool flag = f.is_open();
+	//debug: cout << flag << endl;
+	f.close();
+	if (flag) {
+		readInvertIdx();
+	}
+	else
+		createInvertIdx();
+	createVectorSpace();
+	cout << "Prework done!" << endl << endl;
+}
+
+void Preprocess::createInvertIdx() {
+	string word = string("");
+	int pos = 1;
+	vector<pair<string, int > > Doc;
+	getFileNames("../DataBase", Doc);
+	TotalDoc = Doc.size();
+	
+
+	for (auto doc : Doc) {
+		pos = 1;
+		string filepath = "../DataBase/";
+		filepath.append(doc.first);
+		//for debug: cout << filepath;
+		fstream fin(filepath, fstream::in);
+
+		//generate index
+		while (fin >> word) {
+			//for debug: cout << word << endl;
+			if (!inList(word, doc.second, pos)) {//word not in list
+				addWordNode(word, doc.second, pos);
+			}
+			pos++;
+		}
+		docLen[doc.second] = pos - 1;
+		fin.close();
+	}
+	
+	//store index
+	fstream fout("../InvertedIndex.txt", fstream::out);
+	fout << TotalDoc << "\n";//store total doc number
+	//store word len of every doc
+	for (int i = 0; i < MAX_DOCNUM; i++) {
+		if (docLen[i] != -1)
+			fout << i << " " << docLen[i] << " ";
+	}
+	fout << "\n";
+
+	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
+		fout << p->WordVal << "\n";
+		for (int i = 0; i < p->DocNum; i++) {
+			for (int j : p->DocList[i]) {
+				fout << j << " ";
+			}
+			if (i < p->DocNum - 1)
+				fout << "| ";
+		}
+		fout << "#" << "\n";//end with #
+	}
+	fout.close();
+}
+
+bool Preprocess::inList(string word, int docID, int pos) {
+	//find word, add docID and return true. If docID already exists, return true
+	//if can't find word, return false
+	if (invertIdx == NULL) return false;
+	int flag = 0;
+	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
+		if (word._Equal(p->WordVal)) {//word in wordList
+			for (int i = 0; i < p->DocNum; i++) {
+				if (p->DocList[i].at(0) == docID) {//docID in docList
+					p->DocList[i].emplace_back(pos);//add new position
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0) {//docID not in docList
+				p->DocList[p->DocNum].emplace_back(docID);
+				p->DocList[p->DocNum].emplace_back(pos);
+				p->DocNum++;
+			}
+			return true;
+		}
+	}
+	return false;
+}
+WordNode Preprocess::addWordNode(string word, int docID, int pos) {
+//add new node to index list
+//return tail pointer
+
+	//assign new node
+	WordNode newnode = new node;
+	newnode->WordVal = word;
+	newnode->DocList = new vector<int>[MAX_DOCNUM];
+	newnode->DocList[0].emplace_back(docID);
+	if (pos != -1)  newnode->DocList[0].emplace_back(pos);
+	newnode->Next = NULL;
+	newnode->DocNum = 1;
+
+	//add new node to inverted index
+	if (invertIdx == NULL) {
+		invertIdx = newnode;
+	}
+	else {
+		WordNode p = invertIdx;
+		while (p->Next != NULL) { p = p->Next; }
+		p->Next = newnode;
+	}
+	return newnode;
+
+}
+void Preprocess::readInvertIdx() {
+	fstream in("../InvertedIndex.txt", fstream::in);
+	string str;
+	string str1;
+	string w;//wordValue
+	int nextWord = 1;
+	int firstDoc = 1;
+	int firstPos = 1;
+	WordNode wLoc = NULL;
+	in >> str;
+	TotalDoc = atoi(str.c_str());
+	
+	for (int i = 0; i < TotalDoc; i++) {
+		in >> str;
+		in >> str1;
+		docList.emplace_back(atoi(str.c_str()));
+		docLen[docList.back()] = atoi(str1.c_str());
+	}
+	
+	while (in >> str) {
+		if (nextWord) {//word
+			w = str;
+			nextWord = 0;
+			continue;
+		}
+		else {//docID
+			if (firstDoc && firstPos) {
+				wLoc = addWordNode(w, atoi(str.c_str()), -1);//-1 is temporary
+				firstPos = 0;
+			}
+			else if (str._Equal("|")) {
+				if (firstDoc) firstDoc = 0;
+				firstPos = 1;
+			}
+			else if (str._Equal("#")) {//one doc ends
+				//wLoc = addWordNode(w, atoi(str.c_str()), -1);//new word node
+				nextWord = 1;
+				firstDoc = 1;
+				firstPos = 1;
+			}
+			else if (firstDoc && !firstPos) {
+				wLoc->DocList[wLoc->DocNum - 1].emplace_back(atoi(str.c_str()));//add a new pos into first doc
+			}
+			else if (!firstDoc && firstPos) {
+				wLoc->DocList[wLoc->DocNum].emplace_back(atoi(str.c_str()));//add a new docID
+				wLoc->DocNum++;
+				firstPos = 0;
+			}
+			else {//!firstDoc && !firstPos
+				wLoc->DocList[wLoc->DocNum - 1].emplace_back(atoi(str.c_str()));//add a new pos
+			}
+		}
+
+	}
+	in.close();
+	//for debug: print invertedIndex
+	/*cout << "docNum=" << TotalDoc << endl;
+	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
+		cout << p->WordVal << endl;
+		for (int i = 0; i < p->DocNum; i++) {
+			for (int j : p->DocList[i]) {
+				cout << j << " ";
+			}
+			cout << "| ";
+		}
+		cout << endl;
+	}*/
+}
+
+void Preprocess::getFileNames(string path, vector<pair<string, int> >& Doc)
+{
+	intptr_t hFile = 0;//file handle
+	//文件信息
+	struct _finddata_t fileinfo;
+	string p;
+	string name;
+	if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1) {
+		do {
+			if (fileinfo.name[0] == '.')
+				continue;
+			name = fileinfo.name;
+			docList.emplace_back(atoi(name.substr(0, name.rfind(".")).c_str()));
+			//for debug: cout << name << endl;
+			Doc.emplace_back(name, docList.back());
+		} while (_findnext(hFile, &fileinfo) == 0);
+		_findclose(hFile);
+	}
+}
+void Preprocess::createVectorSpace() {//use wf-idf
+	double idf = 0;
+	double tf = 0;
+	double wf = 0;
+	int wordNuminDoc = 0;
+	int docID = 0;
+
+	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
+		idf = log10f(TotalDoc / p->DocNum);
+		for (int i = 0; i < p->DocNum; i++) {//every doc
+			docID = p->DocList[i].at(0);
+			wordNuminDoc = p->DocList[i].size() - 1;
+			tf =1.0 * wordNuminDoc / docLen[docID] ;
+			wf = (tf == 0) ? 0 : 1 + log10(tf);
+			vectorSpace[docID].emplace_back(p->WordVal, wf * idf);			
+			//for debug: cout << docID << p->WordVal << endl << wf*idf;	
+		}
+	}	
+	//for debug: print
+	/*for (int i = 0; i < MAX_DOCNUM; i++) {
+		if (docLen[i] != -1) {
+			cout << i << endl;
+			for (auto p : vectorSpace[i]) {
+				cout << p.first << " " << p.second << "#";
+			}
+			cout << endl;
+		}
+	}*/
+}
