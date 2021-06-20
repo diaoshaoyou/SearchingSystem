@@ -4,13 +4,17 @@
 
 Windows10
 
-VS2019
+VS2019  debug模式，x86
 
 ## 文件结构
 
+#### Stemmer.py
+
+对Reuters语料库进行预处理的python源代码，包括去除停用词、去除标点、词形还原等。预处理后的文件存在DataBase文件夹中。
+
 #### DataBase
 
-为debug自建的3个语料文件，可以增加。
+用nltk库提前对Reuters进行预处理后的语料文件。预处理后的文件都是小写，所以查询时先把用户输入转化成小写，再检索。
 
 #### InvertedIndex.txt
 
