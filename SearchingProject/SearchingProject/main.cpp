@@ -13,7 +13,7 @@ enum {
 };
 void Readin(vector<string>& inputList);
 void PrintResult(vector<int>& res);
-
+void Up2Low(string& str);
 Preprocess prework = Preprocess();
 BoolMatch boolmatch = BoolMatch();
 int op = 0;
@@ -57,7 +57,18 @@ void Readin(vector<string>& inputList) {
 	query >> str;
 	op = atoi(str.c_str());
 	while (query >> str) {
+		if (!str._Equal("NOT") && !str._Equal("OR") && !str._Equal("AND")) {
+			Up2Low(str);//to lower case
+		}
 		inputList.emplace_back(str);
+	}
+}
+void Up2Low(string& str) {
+	int L = str.length();
+	for (int i = 0; i < L; i++) {
+		if (str[i] >= 'A' && str[i] <= 'Z') {
+			str[i] += 32;
+		}
 	}
 }
 void PrintResult(vector<int>& res) {

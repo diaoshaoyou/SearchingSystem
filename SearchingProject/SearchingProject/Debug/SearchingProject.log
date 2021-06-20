@@ -1,7 +1,3 @@
-﻿  BoolMatch.cpp
-  main.cpp
+﻿  main.cpp
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\VSM.h(30,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  Preprocess.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.cpp(222,25): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  正在生成代码...
   SearchingProject.vcxproj -> D:\00a\IR\SearchingSystem\SearchingProject\Debug\SearchingProject.exe
