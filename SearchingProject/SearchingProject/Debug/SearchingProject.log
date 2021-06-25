@@ -1,3 +1,7 @@
 ﻿  main.cpp
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\VSM.h(30,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  PhraseMatch.cpp
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\PhraseMatch.cpp(103,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\PhraseMatch.cpp(107,22): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
   SearchingProject.vcxproj -> D:\00a\IR\SearchingSystem\SearchingProject\Debug\SearchingProject.exe

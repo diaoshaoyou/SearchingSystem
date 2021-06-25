@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="BoolMatch.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhraseMatch.cpp" />
     <ClCompile Include="Preprocess.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoolMatch.h" />
+    <ClInclude Include="PhraseMatch.h" />
     <ClInclude Include="Preprocess.h" />
     <ClInclude Include="VSM.h" />
   </ItemGroup>
