@@ -152,6 +152,7 @@
     <ClInclude Include="PhraseMatch.h" />
     <ClInclude Include="Preprocess.h" />
     <ClInclude Include="SpellingCorrect.h" />
+    <ClInclude Include="SynExtend.h" />
     <ClInclude Include="VSM.h" />
     <ClInclude Include="WildMatch.h" />
   </ItemGroup>

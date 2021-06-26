@@ -21,6 +21,7 @@ void Preprocess::Run() {
 	else
 		createInvertIdx();
 	createVectorSpace();
+	createKgram();
 	cout << "Prework done!" << endl << endl;
 }
 

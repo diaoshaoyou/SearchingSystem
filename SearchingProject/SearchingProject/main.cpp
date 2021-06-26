@@ -6,6 +6,7 @@
 #include "WildMatch.h"
 #include "SpellingCorrect.h"
 #include "CompressIndex.h"
+#include "SynExtend.h"
 using namespace std;
 enum {
 	Exit = 0,
@@ -25,6 +26,7 @@ PhraseMatch phrasematch = PhraseMatch();
 WildMatch wildmatch = WildMatch();
 SpellingCorrect spellingcorrect = SpellingCorrect();
 CompressIndex comIdx = CompressIndex();
+SynExtend synextend = SynExtend();
 int op = 0;
 int main() {
 	//comIdx.Invert2CompressIdx();
@@ -55,6 +57,7 @@ int main() {
 		PrintResult(phrasematch.resDoc);
 		break;
 	case Synonym:
+		synextend.Run(inputList);
 		break;
 	case Exit:
 		exit = 1;

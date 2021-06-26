@@ -99,6 +99,25 @@ vector<pair<string, double> >* vectorSpace;//docID直接作为数组下标
 
 
 
+## K-gram索引
+
+Preprocess.h和Preprocess.cpp里
+
+```c++
+typedef struct KgramNode {
+	string Kgramword;
+	struct node* wordList[mx];//There are wordNum words in the kgram
+	int wordNum;//total num
+	struct KgramNode* Next;
+};
+typedef KgramNode* TwogramNode;
+TwogramNode Kgramhead;//KgramNode's head, first KgramNode
+```
+
+本次使用了2-gram索引，每个2-gram词有自己的字符数组wordList[]直接链接struct node。
+
+
+
 ## 索引压缩
 
 CompressIndex.h里
@@ -122,3 +141,35 @@ docID的压缩：每个单词中，存第一个ID、该ID与前一个的差值�
 差值：用$\gamma$编码，存在char里，最多7位，最大可表示的差值为15
 
 单词位置未进行压缩
+
+## 布尔查询
+
+#### 输入
+
+操作符有：OR、AND、NOT（全大写）
+
+输入样例：
+
+```c
+1
+COCOA OR shower AND NOT nnn
+```
+
+
+
+## 同义词扩展
+
+#### 输入
+
+在Query.txt输入命令+需要扩展的单词
+
+输入样例：
+
+```c
+6
+bank
+```
+
+#### 运行
+
+先运行``GetSyn.py``获取同义词集合，存在``Synonym.txt``中。再运行C++代码进行查询/输出同义词(组)

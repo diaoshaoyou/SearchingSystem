@@ -4,4 +4,7 @@ D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\VSM.h(30,26): warnin
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.h(7,1): warning C4005: “mx”: 宏重定义
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(3): message : 参见“mx”的前一个定义
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\CompressIndex.h(114,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(27,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(29,11): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(59,21): warning C4018: “<”: 有符号/无符号不匹配
   SearchingProject.vcxproj -> D:\00a\IR\SearchingSystem\SearchingProject\Debug\SearchingProject.exe
