@@ -99,3 +99,26 @@ vector<pair<string, double> >* vectorSpace;//docID直接作为数组下标
 
 
 
+## 索引压缩
+
+CompressIndex.h里
+
+```c++
+struct node_com {
+	int FirstDoc;//第一个doc ID
+	int DocNum_com;
+	vector<char> OtherDoc;//其他ID与前一个的差值
+	vector<int>* Pos;//words' positions in every doc
+};
+typedef node_com* WordNode_com;
+vector<string> WordVal;//all characters in database
+WordNode_com* compressIdx;
+```
+
+单词的压缩：把所有单词都存在一个vector<string>里
+
+docID的压缩：每个单词中，存第一个ID、该ID与前一个的差值、对应doc中单词的位置
+
+差值：用$\gamma$编码，存在char里，最多7位，最大可表示的差值为15
+
+单词位置未进行压缩

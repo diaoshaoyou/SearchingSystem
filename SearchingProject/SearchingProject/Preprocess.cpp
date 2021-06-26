@@ -2,6 +2,7 @@
 
 int TotalDoc;//total doc number
 int* docLen;//word len of every doc
+int TotalWord;//total word number
 vector<int> docList;//all docID
 
 void Preprocess::Run() {
@@ -43,6 +44,7 @@ void Preprocess::createInvertIdx() {
 			//for debug: cout << word << endl;
 			if (!inList(word, doc.second, pos)) {//word not in list
 				addWordNode(word, doc.second, pos);
+				TotalWord++;
 			}
 			pos++;
 		}
@@ -52,7 +54,7 @@ void Preprocess::createInvertIdx() {
 	
 	//store index
 	fstream fout("../InvertedIndex.txt", fstream::out);
-	fout << TotalDoc << "\n";//store total doc number
+	fout << TotalDoc << " " << TotalWord << "\n";//store total doc number and total word number
 	//store word len of every doc
 	for (int i = 0; i < MAX_DOCNUM; i++) {
 		if (docLen[i] != -1)
@@ -134,7 +136,9 @@ void Preprocess::readInvertIdx() {
 	WordNode wLoc = NULL;
 	in >> str;
 	TotalDoc = atoi(str.c_str());
-	
+	in >> str;
+	TotalWord = atoi(str.c_str());//total word
+
 	for (int i = 0; i < TotalDoc; i++) {
 		in >> str;
 		in >> str1;

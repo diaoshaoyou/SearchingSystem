@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoolMatch.h" />
+    <ClInclude Include="CompressIndex.h" />
     <ClInclude Include="PhraseMatch.h" />
     <ClInclude Include="Preprocess.h" />
     <ClInclude Include="SpellingCorrect.h" />

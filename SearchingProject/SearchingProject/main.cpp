@@ -5,7 +5,7 @@
 #include "PhraseMatch.h"
 #include "WildMatch.h"
 #include "SpellingCorrect.h"
-
+#include "CompressIndex.h"
 using namespace std;
 enum {
 	Exit = 0,
@@ -24,8 +24,10 @@ BoolMatch boolmatch = BoolMatch();
 PhraseMatch phrasematch = PhraseMatch();
 WildMatch wildmatch = WildMatch();
 SpellingCorrect spellingcorrect = SpellingCorrect();
+CompressIndex comIdx = CompressIndex();
 int op = 0;
 int main() {
+	//comIdx.Invert2CompressIdx();
 	prework.Run();
 	int exit = 0;
 	vector<string> inputList;
