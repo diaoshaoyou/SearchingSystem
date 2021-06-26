@@ -46,6 +46,7 @@ private:
 	bool inList(string word, int docID, int pos);//find word, add docID and return true. If docID already exists, return true
 										//if can't find word, return false
 	WordNode addWordNode(string word, int docID,int pos); //add new node to index list,  return tail pointer
+	void addNewDoc(WordNode p, int docID, int pos);//add new doc and sort docID
 	void getFileNames(string path, vector<pair<string, int> >& Doc);
 
 	void readInvertIdx();

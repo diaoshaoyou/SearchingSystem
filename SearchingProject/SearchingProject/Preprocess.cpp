@@ -92,9 +92,7 @@ bool Preprocess::inList(string word, int docID, int pos) {
 				}
 			}
 			if (flag == 0) {//docID not in docList
-				p->DocList[p->DocNum].emplace_back(docID);
-				p->DocList[p->DocNum].emplace_back(pos);
-				p->DocNum++;
+				addNewDoc(p, docID, pos);
 			}
 			return true;
 		}
@@ -125,6 +123,21 @@ WordNode Preprocess::addWordNode(string word, int docID, int pos) {
 	}
 	return newnode;
 
+}
+void Preprocess::addNewDoc(WordNode p, int docID, int pos) {//add and sort docID
+	int i = 0;
+	for (i = p->DocNum - 1; i >= 0; i--) {
+		if (docID < p->DocList[i][0]) {//move forward
+			//cout << p->WordVal << endl;
+			p->DocList[i + 1] = p->DocList[i];
+		}
+		else break;
+	}
+	//cout << i+1 << endl;
+	p->DocList[i + 1].clear();
+	p->DocList[i + 1].emplace_back(docID);
+	p->DocList[i + 1].emplace_back(pos);
+	p->DocNum++;
 }
 void Preprocess::readInvertIdx() {
 	fstream in("../InvertedIndex.txt", fstream::in);
