@@ -240,3 +240,67 @@ void Preprocess::createVectorSpace() {//use wf-idf
 		}
 	}*/
 }
+void Preprocess::createKgram() {
+	//create Kgram
+	WordNode p = invertIdx;
+	while (p != NULL) {
+		InsertIdxtoKgram(p);
+		p = p->Next;
+	}
+
+	//debug
+	/*TwogramNode temp = Kgramhead;
+	while (temp != NULL) {
+		std::cout << temp->Kgramword<<":";
+		for (int i = 0; i < temp->wordNum; i++) std::cout << temp->wordList[i]->WordVal << " ";
+		std::cout << endl;
+		temp = temp->Next;
+	}*/
+}
+
+void Preprocess::InsertIdxtoKgram(WordNode& n) {
+	string word = n->WordVal;
+	word.insert(0, "$");
+	word.append("$");
+	//std::cout << word << endl;
+	while (!word._Equal("$")) {
+		string temp;
+		temp = word.substr(0, 2);
+		word = word.substr(1);
+		TwogramNode twogram_n = FindKgramNode(temp);
+		if (twogram_n != NULL) {
+			if (KgramwordRepeat(n, twogram_n)) {
+				twogram_n->wordList[twogram_n->wordNum] = n;
+				twogram_n->wordNum++;
+			}
+		}
+		else createKgramNode(n, temp);
+
+	}
+
+}
+
+TwogramNode Preprocess::FindKgramNode(string word) {
+	TwogramNode p = Kgramhead;
+	while (p != NULL) {
+		if (p->Kgramword._Equal(word))return p;
+		p = p->Next;
+	}
+	return NULL;
+}
+
+void Preprocess::createKgramNode(WordNode& n, string word) {
+	//std::cout << word << endl;
+	TwogramNode kgram_n = new KgramNode;
+	kgram_n->Kgramword = word;
+	kgram_n->wordNum = 1;
+	kgram_n->wordList[0] = n;
+	kgram_n->Next = Kgramhead;
+	Kgramhead = kgram_n;
+}
+
+bool Preprocess::KgramwordRepeat(WordNode& n, TwogramNode& kgram_n) {
+	for (int i = 0; i < kgram_n->wordNum; i++)
+		if (n->WordVal._Equal(kgram_n->wordList[i]->WordVal))return false;
+	return true;
+}

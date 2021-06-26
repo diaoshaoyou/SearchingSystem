@@ -27,6 +27,12 @@
     <ClCompile Include="PhraseMatch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SpellingCorrect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WildMatch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Preprocess.h">
@@ -39,6 +45,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="PhraseMatch.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellingCorrect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WildMatch.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

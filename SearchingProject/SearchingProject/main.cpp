@@ -3,6 +3,9 @@
 #include "VSM.h"
 #include "BoolMatch.h"
 #include "PhraseMatch.h"
+#include "WildMatch.h"
+#include "SpellingCorrect.h"
+
 using namespace std;
 enum {
 	Exit = 0,
@@ -19,6 +22,8 @@ void Up2Low(string& str);
 Preprocess prework = Preprocess();
 BoolMatch boolmatch = BoolMatch();
 PhraseMatch phrasematch = PhraseMatch();
+WildMatch wildmatch = WildMatch();
+SpellingCorrect spellingcorrect = SpellingCorrect();
 int op = 0;
 int main() {
 	prework.Run();
@@ -35,8 +40,11 @@ int main() {
 		PrintResult(boolmatch.resDoc);
 		break;
 	case Wild_Match:
+		wildmatch.Run(inputList, prework.Kgramhead);
+		PrintResult(wildmatch.resDoc);
 		break;
 	case Correct:
+		spellingcorrect.Run(inputList, prework.Kgramhead);
 		break;
 	case TopK:
 		break;

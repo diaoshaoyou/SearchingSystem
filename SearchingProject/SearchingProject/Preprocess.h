@@ -1,5 +1,6 @@
 #pragma once
 #define MAX_DOCNUM 21600
+#define mx 100
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -15,13 +16,23 @@ struct node{
 };
 typedef node* WordNode;
 
+typedef struct KgramNode {
+	string Kgramword;
+	struct node* wordList[mx];
+	int wordNum;
+	struct KgramNode* Next;
+};
+typedef KgramNode* TwogramNode;
+
 class Preprocess {
 public:
 	WordNode invertIdx;//wordnode's head, first wordnode
+	TwogramNode Kgramhead;//BTNode's head, first BTNode
 	vector<pair<string, double> >* vectorSpace;//docID=array's index, docID直接作为数组下标
 
 	Preprocess() {
 		invertIdx = NULL;
+		Kgramhead = NULL;
 		vectorSpace = new vector<pair<string, double> >[MAX_DOCNUM];
 	}
 	~Preprocess() {
@@ -40,6 +51,12 @@ private:
 	void readInvertIdx();
 
 	void createVectorSpace();
+
+	void createKgram();
+	void InsertIdxtoKgram(WordNode& n);
+	TwogramNode FindKgramNode(string word);
+	void createKgramNode(WordNode& n, string word);
+	bool KgramwordRepeat(WordNode& n, TwogramNode& kgram_n);
 };
 
 

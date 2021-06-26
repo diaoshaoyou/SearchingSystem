@@ -143,12 +143,16 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhraseMatch.cpp" />
     <ClCompile Include="Preprocess.cpp" />
+    <ClCompile Include="SpellingCorrect.cpp" />
+    <ClCompile Include="WildMatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoolMatch.h" />
     <ClInclude Include="PhraseMatch.h" />
     <ClInclude Include="Preprocess.h" />
+    <ClInclude Include="SpellingCorrect.h" />
     <ClInclude Include="VSM.h" />
+    <ClInclude Include="WildMatch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
