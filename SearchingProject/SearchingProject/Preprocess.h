@@ -1,16 +1,15 @@
 #pragma once
 #define MAX_DOCNUM 21600
 #define mx 100
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
+#include "global.h"
 #include <io.h>
+#include <ctime>
+
 using namespace std;
 
 struct node{
 	string WordVal;
-	vector<int>* DocList;//vecotr[0]=docID, vector[i]=word's position in doc
+	vector<vector<int> > DocList;//vecotr[0]=docID, vector[i]=word's position in doc
 	int DocNum;
 	struct node* Next;
 };

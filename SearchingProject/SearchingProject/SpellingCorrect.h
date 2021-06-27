@@ -1,9 +1,6 @@
 #pragma once
-#define ERROR -9999
-#define EMPTY -99
 #include "Preprocess.h"
-#include <set>
-#include <algorithm>
+#include "global.h"
 #define mx 1000
 enum {
 

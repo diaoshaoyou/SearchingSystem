@@ -1,9 +1,6 @@
 #pragma once
-#define ERROR -9999
-#define EMPTY -99
+#include "global.h"
 #include "Preprocess.h"
-#include <set>
-#include <algorithm>
 
 enum {//priority: NOT>AND>OR
 	_NOT=-1,

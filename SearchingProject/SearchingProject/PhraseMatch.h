@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 #define MAX_PHRASE_LEN 10
-#define PHRASE_OVERFLOW -999
+#include "global.h"
 #include"BoolMatch.h"
 class PhraseMatch {
 public:

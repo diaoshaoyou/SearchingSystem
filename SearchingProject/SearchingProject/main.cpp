@@ -1,5 +1,4 @@
-#define InstErr "#Error: invalid instruction!"
-#define OverflowErr "#Error: instruction is too long!"
+#include "global.h"
 #include "VSM.h"
 #include "BoolMatch.h"
 #include "PhraseMatch.h"
@@ -7,6 +6,7 @@
 #include "SpellingCorrect.h"
 #include "CompressIndex.h"
 #include "SynExtend.h"
+#include "TopK.h"
 using namespace std;
 enum {
 	Exit = 0,
@@ -27,6 +27,7 @@ WildMatch wildmatch = WildMatch();
 SpellingCorrect spellingcorrect = SpellingCorrect();
 CompressIndex comIdx = CompressIndex();
 SynExtend synextend = SynExtend();
+TOPK topk = TOPK();
 int op = 0;
 int main() {
 	//comIdx.Invert2CompressIdx();
@@ -51,6 +52,8 @@ int main() {
 		spellingcorrect.Run(inputList, prework.Kgramhead);
 		break;
 	case TopK:
+		topk.Run(inputList, prework.vectorSpace);
+		PrintResult(topk.resDoc);
 		break;
 	case Phrase_Match:
 		phrasematch.Run(inputList, prework.invertIdx);

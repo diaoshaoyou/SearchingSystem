@@ -1,5 +1,5 @@
 #pragma once
-#define OverflowErr "#Error: instruction is too long!"
+#include "global.h"
 #include "PhraseMatch.h"
 using namespace std;
 

@@ -29,10 +29,10 @@ void Preprocess::createInvertIdx() {
 	string word = string("");
 	int pos = 1;
 	vector<pair<string, int > > Doc;
+	clock_t startT, endT;
+	startT = clock();
 	getFileNames("../DataBase", Doc);
 	TotalDoc = Doc.size();
-	
-
 	for (auto doc : Doc) {
 		pos = 1;
 		string filepath = "../DataBase/";
@@ -52,7 +52,19 @@ void Preprocess::createInvertIdx() {
 		docLen[doc.second] = pos - 1;
 		fin.close();
 	}
-	
+	endT = clock();
+	cout << "cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s ";
+
+	//debug:
+	//*int max = 0;
+	//double sum = 0;
+	//for (WordNode p = invertIdx; p != NULL; p = p->Next) {
+	//	sum += p->DocNum;
+	//	if (p->DocNum > max)
+	//		max = p->DocNum;
+	//}
+	//cout << "max:" << max << " avg: " << sum / TotalWord << endl;*/
+
 	//store index
 	fstream fout("../InvertedIndex.txt", fstream::out);
 	fout << TotalDoc << " " << TotalWord << "\n";//store total doc number and total word number
@@ -106,9 +118,11 @@ WordNode Preprocess::addWordNode(string word, int docID, int pos) {
 	//assign new node
 	WordNode newnode = new node;
 	newnode->WordVal = word;
-	newnode->DocList = new vector<int>[MAX_DOCNUM];
-	newnode->DocList[0].emplace_back(docID);
-	if (pos != -1)  newnode->DocList[0].emplace_back(pos);
+	vector<int> newDoc;
+	newDoc.emplace_back(docID);
+	if (pos != -1) newDoc.emplace_back(pos);
+	newnode->DocList.clear();
+	newnode->DocList.emplace_back(newDoc);
 	newnode->Next = NULL;
 	newnode->DocNum = 1;
 
@@ -128,19 +142,29 @@ void Preprocess::addNewDoc(WordNode p, int docID, int pos) {//add and sort docID
 	int i = 0;
 	for (i = p->DocNum - 1; i >= 0; i--) {
 		if (docID < p->DocList[i][0]) {//move forward
-			//cout << p->WordVal << endl;
-			p->DocList[i + 1] = p->DocList[i];
+			if (i == p->DocNum - 1) {
+				p->DocList.emplace_back(p->DocList[i]);
+			}
+			else
+				p->DocList[i + 1] = p->DocList[i];
 		}
 		else break;
 	}
-	//cout << i+1 << endl;
-	p->DocList[i + 1].clear();
-	p->DocList[i + 1].emplace_back(docID);
-	p->DocList[i + 1].emplace_back(pos);
+	if (i == p->DocNum - 1) {
+		vector<int> tmp;
+		tmp.emplace_back(docID);
+		tmp.emplace_back(pos);
+		p->DocList.emplace_back(tmp);
+	}
+	else {
+		p->DocList[i + 1].clear();
+		p->DocList[i + 1].emplace_back(docID);
+		p->DocList[i + 1].emplace_back(pos);
+	}
 	p->DocNum++;
 }
 void Preprocess::readInvertIdx() {
-	fstream in("../InvertedIndex.txt", fstream::in);
+	clock_t startT, endT;
 	string str;
 	string str1;
 	string w;//wordValue
@@ -148,6 +172,9 @@ void Preprocess::readInvertIdx() {
 	int firstDoc = 1;
 	int firstPos = 1;
 	WordNode wLoc = NULL;
+
+	startT = clock();
+	fstream in("../InvertedIndex.txt", fstream::in);
 	in >> str;
 	TotalDoc = atoi(str.c_str());
 	in >> str;
@@ -185,7 +212,9 @@ void Preprocess::readInvertIdx() {
 				wLoc->DocList[wLoc->DocNum - 1].emplace_back(atoi(str.c_str()));//add a new pos into first doc
 			}
 			else if (!firstDoc && firstPos) {
-				wLoc->DocList[wLoc->DocNum].emplace_back(atoi(str.c_str()));//add a new docID
+				vector<int> tmp;
+				tmp.emplace_back(atoi(str.c_str()));
+				wLoc->DocList.emplace_back(tmp);//add a new docID
 				wLoc->DocNum++;
 				firstPos = 0;
 			}
@@ -196,6 +225,8 @@ void Preprocess::readInvertIdx() {
 
 	}
 	in.close();
+	endT = clock();
+	cout << "cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s ";
 	//for debug: print invertedIndex
 	/*cout << "docNum=" << TotalDoc << endl;
 	for (WordNode p = invertIdx; p != NULL; p = p->Next) {

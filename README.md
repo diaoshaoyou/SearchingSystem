@@ -56,7 +56,7 @@ Preprocess.h和Preprocess.cpp里
 ```c++
 struct node{
 	string WordVal;
-	vector<int>* DocList;//vecotr[0]=docID, vector[i]=word's position in doc
+	vector<vector<int> > DocList;//vecotr[0]=docID, vector[i]=word's position in doc
 	int DocNum;
 	struct node* Next;
 };

@@ -1,31 +1,33 @@
-﻿  BoolMatch.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(24,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+﻿  main.cpp
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(23,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\VSM.h(30,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.h(4,1): warning C4005: “mx”: 宏重定义
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(3): message : 参见“mx”的前一个定义
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\CompressIndex.h(111,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(27,22): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(29,11): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(59,21): warning C4018: “<”: 有符号/无符号不匹配
   PhraseMatch.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(24,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(23,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\PhraseMatch.cpp(103,20): warning C4018: “<”: 有符号/无符号不匹配
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\PhraseMatch.cpp(107,22): warning C4018: “<”: 有符号/无符号不匹配
   Preprocess.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(24,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.cpp(240,25): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(23,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.cpp(271,25): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
   SpellingCorrect.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(24,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.h(7,1): warning C4005: “mx”: 宏重定义
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(23,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.h(4,1): warning C4005: “mx”: 宏重定义
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(3): message : 参见“mx”的前一个定义
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.cpp(28,21): warning C4018: “<”: 有符号/无符号不匹配
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.cpp(118,17): warning C4018: “<=”: 有符号/无符号不匹配
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.cpp(119,21): warning C4018: “<=”: 有符号/无符号不匹配
+  TopK.cpp
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(23,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\TopK.cpp(21,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\TopK.cpp(30,20): warning C4018: “<”: 有符号/无符号不匹配
   WildMatch.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(24,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(23,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\WildMatch.cpp(22,21): warning C4018: “<”: 有符号/无符号不匹配
 D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\WildMatch.cpp(48,21): warning C4018: “<”: 有符号/无符号不匹配
-  main.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(24,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\VSM.h(30,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SpellingCorrect.h(7,1): warning C4005: “mx”: 宏重定义
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(3): message : 参见“mx”的前一个定义
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\CompressIndex.h(114,22): warning C4018: “<”: 有符号/无符号不匹配
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(27,22): warning C4018: “<”: 有符号/无符号不匹配
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(29,11): warning C4018: “<”: 有符号/无符号不匹配
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\SynExtend.h(59,21): warning C4018: “<”: 有符号/无符号不匹配
   正在生成代码...
   SearchingProject.vcxproj -> D:\00a\IR\SearchingSystem\SearchingProject\Debug\SearchingProject.exe

@@ -1,10 +1,7 @@
 #pragma once
 #define MAX_DOCNUM 21600
 #include <stdio.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
+#include "global.h"
 using namespace std;
 extern int TotalDoc;//total doc number
 extern int* docLen;//word len of every doc
