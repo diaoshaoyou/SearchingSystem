@@ -30,7 +30,7 @@ SynExtend synextend = SynExtend();
 TOPK topk = TOPK();
 int op = 0;
 int main() {
-	//comIdx.Invert2CompressIdx();
+	clock_t startT, endT;
 	prework.Run();
 	int exit = 0;
 	vector<string> inputList;
@@ -39,9 +39,10 @@ int main() {
 	//	cin >> op;
 	//	cout << "#Input your query: ";//query ends with ;
 	Readin(inputList);
+	startT = clock();
 	switch (op) {
 	case Bool_Match:
-		boolmatch.Run(inputList, prework.invertIdx);
+		boolmatch.Run(inputList, prework.BZhash);
 		PrintResult(boolmatch.resDoc);
 		break;
 	case Wild_Match:
@@ -56,7 +57,7 @@ int main() {
 		PrintResult(topk.resDoc);
 		break;
 	case Phrase_Match:
-		phrasematch.Run(inputList, prework.invertIdx);
+		phrasematch.Run(inputList, prework.BZhash);
 		PrintResult(phrasematch.resDoc);
 		break;
 	case Synonym:
@@ -70,7 +71,10 @@ int main() {
 		break;
 	}
 	//if (exit) break;
+	endT = clock();
+	cout << "search cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s" << endl;
 //}
+
 }
 void Readin(vector<string>& inputList) {
 	string str;

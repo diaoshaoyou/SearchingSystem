@@ -15,15 +15,15 @@ public:
 
 	BoolMatch() { };
 	~BoolMatch() {};
-	void Run(vector<string>& inputList, WordNode invertIdx);//start bool search
+	void Run(vector<string>& inputList, BlizzardHash& BZhash);//start bool search
 	
 private:
 	vector< vector<int> > postExp;//post expression from query, store docIDs of one word	
 
 	bool checkSyntax(vector<string>& inputList);//check basic syntax error
 
-	void mid2Post(vector<string>& inputList, WordNode invertIdx);//mid expression to post expression
-	void getDoc(string& word, WordNode invertIdx, vector<int>& ret);//given one word, get its docID
+	void mid2Post(vector<string>& inputList, BlizzardHash& BZhash);//mid expression to post expression
+	void getDoc(string& word, BlizzardHash& BZhash, vector<int>& ret);//given one word, get its docID
 	
 	void search();//search database using post expression
 	void opOR_AND(vector<int>& docs1, vector<int>& docs2, int choice, vector<int>& tmpRes);//choice=0, OR; choice=1, AND. result=tmpRes

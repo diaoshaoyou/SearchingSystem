@@ -1,5 +1,6 @@
 #pragma once
 #include "Preprocess.h"
+#include "global.h"
 extern int TotalDoc;//total doc number
 extern int* docLen;
 class VSM {

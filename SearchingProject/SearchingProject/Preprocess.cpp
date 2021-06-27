@@ -22,6 +22,9 @@ void Preprocess::Run() {
 		createInvertIdx();
 	createVectorSpace();
 	createKgram();
+	BZhash = BlizzardHash();
+	BZhash.CreateHashTable(invertIdx);//set hash table
+	
 	cout << "Prework done!" << endl << endl;
 }
 

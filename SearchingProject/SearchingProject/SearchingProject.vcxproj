@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlizzardHash.cpp" />
     <ClCompile Include="BoolMatch.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PhraseMatch.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="WildMatch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlizzardHash.h" />
     <ClInclude Include="BoolMatch.h" />
     <ClInclude Include="CompressIndex.h" />
     <ClInclude Include="global.h" />

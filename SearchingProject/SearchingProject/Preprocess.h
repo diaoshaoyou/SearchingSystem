@@ -1,19 +1,14 @@
 #pragma once
 #define MAX_DOCNUM 21600
-#define mx 100
+#define mx 5000
 #include "global.h"
+#include "BlizzardHash.h"
 #include <io.h>
 #include <ctime>
 
 using namespace std;
 
-struct node{
-	string WordVal;
-	vector<vector<int> > DocList;//vecotr[0]=docID, vector[i]=word's position in doc
-	int DocNum;
-	struct node* Next;
-};
-typedef node* WordNode;
+
 
 typedef struct KgramNode {
 	string Kgramword;
@@ -28,11 +23,13 @@ public:
 	WordNode invertIdx;//wordnode's head, first wordnode
 	TwogramNode Kgramhead;//BTNode's head, first BTNode
 	vector<pair<string, double> >* vectorSpace;//docID=array's index, docID直接作为数组下标
+	BlizzardHash BZhash;
 
 	Preprocess() {
 		invertIdx = NULL;
 		Kgramhead = NULL;
 		vectorSpace = new vector<pair<string, double> >[MAX_DOCNUM];
+		BZhash = BlizzardHash();
 	}
 	~Preprocess() {
 		//delete[]invertIdx;

@@ -3,13 +3,13 @@ using namespace std;
 
 extern vector<int> docList;//all docID
 
-void BoolMatch::Run(vector<string>& inputList, WordNode invertIdx) {
+void BoolMatch::Run(vector<string>& inputList, BlizzardHash& BZhash) {
 	if (checkSyntax(inputList) == false) {//check basic syntax error
 		resDoc.clear();
 		resDoc.emplace_back(ERROR);
 		return;
 	}
-	mid2Post(inputList, invertIdx);
+	mid2Post(inputList, BZhash);
 	search();
 }
 
@@ -46,7 +46,7 @@ bool BoolMatch::checkSyntax(vector<string>& inputList) {
 	return true;
 }
 
-void BoolMatch::mid2Post(vector<string>& inputList, WordNode invertIdx) {
+void BoolMatch::mid2Post(vector<string>& inputList, BlizzardHash& BZhash) {
 	vector<string> opStack;
 	postExp.clear();
 	vector<int> wordVec, notVec, orVec, andVec;
@@ -79,7 +79,7 @@ void BoolMatch::mid2Post(vector<string>& inputList, WordNode invertIdx) {
 			opStack.emplace_back("NOT");
 		}
 		else {//input==word
-			getDoc(input, invertIdx, wordVec);
+			getDoc(input, BZhash, wordVec);
 			postExp.emplace_back(wordVec);
 		}
 	}
@@ -94,22 +94,19 @@ void BoolMatch::mid2Post(vector<string>& inputList, WordNode invertIdx) {
 	}
 	//cout << postExp.at(0).at(0) << endl << postExp.at(1).at(0) << endl << postExp.at(2).at(0);
 }
-void BoolMatch::getDoc(string& word, WordNode invertIdx, vector<int>& ret) {
+void BoolMatch::getDoc(string& word, BlizzardHash& BZhash, vector<int>& ret) {
 	ret.clear();
-	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
-		if (p->WordVal._Equal(word)) {
-			for (int i = 0; i < p->DocNum; i++) {
-				ret.emplace_back(p->DocList[i].at(0));
-			}
-			break;
+	WordNode p = BZhash.GetWordNode(word);
+	if (p != NULL) {
+		for (int i = 0; i < p->DocNum; i++) {
+			ret.emplace_back(p->DocList[i].at(0));
 		}
 	}
-	//if word not in database, docs is empty
+	//if word not in database, ret is empty
 	if (ret.empty())
 		ret.emplace_back(EMPTY);
 	else//not empty
 		sort(ret.begin(), ret.end());
-
 }
 void BoolMatch::search() {
 

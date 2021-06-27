@@ -11,3 +11,11 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+using namespace std;
+struct node {
+	string WordVal;
+	vector<vector<int> > DocList;//vecotr[0]=docID, vector[i]=word's position in doc
+	int DocNum;
+	struct node* Next;
+};
+typedef node* WordNode;

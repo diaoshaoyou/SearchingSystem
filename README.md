@@ -173,3 +173,27 @@ bank
 #### 运行
 
 先运行``GetSyn.py``获取同义词集合，存在``Synonym.txt``中。再运行C++代码进行查询/输出同义词(组)
+
+
+
+## 词典索引
+
+用暴雪哈希算法，最大可能降低冲突概率。Hash1, Hash2, Hash3为某word计算得到的哈希值，只有三者相同才能算同一个word，否则顺延填入后续的空位中。PWord存对应word的倒排索引指针，方便定位到它的docID、pos等性质。
+
+```c++
+struct Hashnode{
+    unsigned int Hash1;
+    unsigned int Hash2;
+    unsigned int Hash3;
+    WordNode PWord;//倒排索引指针
+};
+```
+
+
+
+## 耗时
+
+生成倒排索引      ![image-20210627193307323](img/image-20210627193307323.png)
+
+读取倒排索引      ![image-20210627155546474](img/image-20210627155546474.png) 
+

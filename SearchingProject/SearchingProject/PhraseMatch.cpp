@@ -1,11 +1,11 @@
 #include "PhraseMatch.h"
-void PhraseMatch::Run(vector<string>& inputList, WordNode invertIdx) {
+void PhraseMatch::Run(vector<string>& inputList, BlizzardHash& BZhash) {
 	//words must in database & must in same doc & must in order
 	resDoc.clear();
 	int n = inputList.size();
 	if (n == 1) {//same as boolmatch
 		BoolMatch bm = BoolMatch();
-		bm.Run(inputList, invertIdx);
+		bm.Run(inputList, BZhash);
 		resDoc = bm.resDoc;
 		return;
 	}
@@ -17,12 +17,14 @@ void PhraseMatch::Run(vector<string>& inputList, WordNode invertIdx) {
 	vector<int> sameDocIdx[MAX_PHRASE_LEN];
 	int find = 0;
 	int none = 0;
-
-	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
-		if (findOneWord(p, inputList, pwords, n)) {
+	
+	for (int i = 0; i < n; i++) {
+		pwords[i] = BZhash.GetWordNode(inputList[i]);
+		if (pwords != NULL) {
 			find++;
 		}
 	}
+	
 	if (find == n) {//input words are all in database
 		if (!inSameDoc(pwords, sameDocIdx, n)) {//input words are not in same doc
 			none = 1;
@@ -36,15 +38,15 @@ void PhraseMatch::Run(vector<string>& inputList, WordNode invertIdx) {
 		resDoc.emplace_back(EMPTY);
 	}
 }
-bool PhraseMatch::findOneWord(WordNode ptr, vector<string>& inputList, WordNode pwords[], int n) {
-	for (int i = 0; i < n; i++) {
-		if (ptr->WordVal._Equal(inputList[i])) {
-			pwords[i] = ptr;
-			return true;
-		}
-	}
-	return false;
-}
+//bool PhraseMatch::findOneWord(WordNode ptr, vector<string>& inputList, WordNode pwords[], int n) {
+//	for (int i = 0; i < n; i++) {
+//		if (ptr->WordVal._Equal(inputList[i])) {
+//			pwords[i] = ptr;
+//			return true;
+//		}
+//	}
+//	return false;
+//}
 bool PhraseMatch::inSameDoc(WordNode pwords[], vector<int> sameDocIdx[], int n) {
 	resDoc.clear();
 	set<int> sameDocID;
