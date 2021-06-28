@@ -1,7 +1,7 @@
 #pragma once
 #include "Preprocess.h"
 #include "global.h"
-#define mx 1000
+
 enum {
 
 };
@@ -21,17 +21,13 @@ public:
 	void Run(vector<string>& inputList, TwogramNode KgramHash[]);//start bool search
 
 private:
-	SpellingList spellingList[mx];
-	int mindistance;
-	int spellingListNum;
+	vector<SpellingNode*> spellingList;
 
 	bool checkSyntax(vector<string>& inputList);//check basic syntax error
 
 	void search(vector<string>& inputList, TwogramNode KgramHash[]);//search database using post expression
 	void wordtokgram(string word, TwogramNode KgramHash[]);//turn word into 2-gram 
 	TwogramNode FindKgramNode(string word, TwogramNode KgramHash[]);
-
 	int FindSpellingList(string word);
 	int EditDistance(string input1, string input2);
-	void SaveTop(int mxf);//only save max frequency
 };

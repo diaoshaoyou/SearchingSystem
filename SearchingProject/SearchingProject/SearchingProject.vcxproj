@@ -155,6 +155,7 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="PhraseMatch.h" />
     <ClInclude Include="Preprocess.h" />
+    <ClInclude Include="Search.h" />
     <ClInclude Include="SpellingCorrect.h" />
     <ClInclude Include="SynExtend.h" />
     <ClInclude Include="TopK.h" />

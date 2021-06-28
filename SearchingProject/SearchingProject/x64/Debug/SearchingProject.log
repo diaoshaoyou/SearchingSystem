@@ -1,1 +1,7 @@
-﻿  SearchingProject.vcxproj -> C:\Users\wenji\Desktop\SearchingProject\x64\Debug\SearchingProject.exe
+﻿  main.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\CompressIndex.h(131,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\CompressIndex.h(136,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SynExtend.h(82,1): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\main.cpp(75,22): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  SearchingProject.vcxproj -> C:\Users\wenji\Desktop\SearchingProject\x64\Debug\SearchingProject.exe

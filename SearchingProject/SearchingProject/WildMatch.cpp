@@ -47,19 +47,22 @@ void WildMatch::search(vector<string>& inputList, TwogramNode KgramHash[]) {
 		for (int i = 0; i < input.length(); i++) {
 			if (input[i] == '*') {//intercepts the word between *
 				KgramList.push_back(temp);
-				wordtokgram(temp, KgramHash);
 				temp = "";
 			}
 			else temp.insert(temp.length(), 1, input[i]);
 		}
 		if (temp != "") {
 			KgramList.push_back(temp);
-			wordtokgram(temp, KgramHash);
 			temp = "";
 		}
+
 	}
-	CheckRes();
-	if (!resWord.empty())ResWordtoResDoc();
+	for (int i = 0; i < KgramList.size(); i++) {
+		wordtokgram(KgramList[i], KgramHash);
+	}
+
+	//CheckRes();
+	//if (!resWord.empty())ResWordtoResDoc();
 	//delete duplicate ID and sort, È¥ÖØ+ÅÅÐò
 	set<int>s(resDoc.begin(), resDoc.end());
 	resDoc.assign(s.begin(), s.end());
@@ -78,25 +81,29 @@ void WildMatch::wordtokgram(string word, TwogramNode KgramHash[]) {
 		word = word.substr(1);
 		TwogramNode twogram_n = FindKgramNode(temp, KgramHash);
 		if (twogram_n != NULL) {
-			if (resWord.empty()) {//the first result save into resWord
-				for (int i = 0; i < twogram_n->wordNum; i++) {
-					/*cout << "empty!" << endl;
-					cout << twogram_n->wordList[i] << endl;*/
-					if (!CheckNodeExist(twogram_n->wordList[i]->WordVal, resWord))resWord.push_back(*twogram_n->wordList[i]);
+			for (int i = 0; i < twogram_n->wordNum; i++) {
+				string tempres = twogram_n->wordList[i]->WordVal;
+				tempres.insert(0, "$");
+				tempres.append("$");
+				bool correct = true;
+				for (string s : KgramList) {
+					//cout << tempres <<endl;
+					int first = tempres.find(s);
+					//cout << "first = " << first<<endl;
+					if (first == -1) {//delete error result
+						correct = false;
+						break;
+					}
+					tempres = tempres.substr(first + s.length());
 				}
-			}
-			else {//the results are temporary temRes
-				temRes.clear();
-				for (int i = 0; i < twogram_n->wordNum; i++) {
-					/*cout << "NO" << endl;
-					cout << twogram_n->wordList[i] << endl;*/
-					if (CheckNodeExist(twogram_n->wordList[i]->WordVal, resWord) && !CheckNodeExist(twogram_n->wordList[i]->WordVal, temRes))temRes.push_back(*twogram_n->wordList[i]); //merge with resWord and do not repeat in temRes
+				if (correct) {
+					resWord.push_back(*twogram_n->wordList[i]);
+					for (int j = 0; j < twogram_n->wordList[i]->DocNum; j++)
+						for (int ID : twogram_n->wordList[i]->DocList[j]) {
+							resDoc.push_back(ID);
+							break;
+						}
 				}
-				//resWord = temRes
-				resWord.clear();
-				resWord = temRes;
-				//for (node n : temRes) resWord.push_back(n);
-
 			}
 			//debug
 			/*for (node n : resWord)cout << n.WordVal << " ";
@@ -108,57 +115,7 @@ void WildMatch::wordtokgram(string word, TwogramNode KgramHash[]) {
 	}
 }
 
-
-
 TwogramNode WildMatch::FindKgramNode(string word, TwogramNode KgramHash[]) {
+	if (int(word[0]) < 0 || int(word[0]) > 255 || int(word[1]) < 0 || int(word[1]) > 255)return NULL;
 	return KgramHash[int(word[0]) * 255 + int(word[1])];
-}
-
-bool WildMatch::CheckNodeExist(string word, vector<node>& res) {
-	if (res.empty())return false;
-	for (node n : res) {
-		if (word._Equal(n.WordVal))return true;
-	}
-	return false;
-}
-
-void WildMatch::CheckRes() {
-	vector<node> temRes = resWord;
-	int i = 0;
-	int del = 0;
-	//cout << "-----------checkres---------" << endl;
-	for (node n : temRes) {
-		string temp = n.WordVal;
-		//cout << temp << endl;
-		temp.insert(0, "$");
-		temp.append("$");
-		for (string s : KgramList) {
-			//cout << temp <<endl;
-			int first = temp.find(s);
-			//cout << "first = " << first<<endl;
-			if (first == -1) {//delete error result
-				//cout << resWord.size() << " " << i << endl;
-				resWord.erase(resWord.begin() + i);
-				//del++;
-				i--;
-				break;
-			}
-			temp = temp.substr(first + s.length());
-		}
-		i++;
-	}
-	//cout << "---" << endl;
-}
-
-void WildMatch::ResWordtoResDoc() {
-	cout << "RESULT:" << endl;
-	for (node n : resWord) {
-		cout << n.WordVal << " ";
-		for (int i = 0; i < n.DocNum; i++)
-			for (int ID : n.DocList[i]) {
-				resDoc.push_back(ID);
-				break;
-			}
-	}
-	cout << endl;
 }

@@ -25,7 +25,7 @@ public:
 	TOPK() { };
 	~TOPK() {};
 	void Run(vector<string>& inputList, vector<pair<string, double> >* vectorspace);//start bool search
-	
+
 private:
 	int k;//Top k
 	int inputID;//input's docID

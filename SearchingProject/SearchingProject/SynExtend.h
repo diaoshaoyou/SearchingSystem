@@ -7,22 +7,41 @@ class SynExtend {
 public:
 	SynExtend() {};
 	~SynExtend() {};
-	void Run(vector<string>& inputList) {
+	void Run(vector<string>& inputList, BlizzardHash& BZhash) {
 		if (inputList.size() > 1) {
 			cout << OverflowErr << endl;
 			return;
 		}
 
 		findSyn();
-		cout << "\"" << inputList[0] << "\" synonyms: ";
-		if (Synonyms.empty())
+		cout << "\"" << inputList[0] << "\" synonyms: " << endl;
+		if (Synonyms.empty()) {
 			cout << "none" << endl;
-		else
-			cout << Synonyms.size() << endl;
-		printSyn();
+			return;
+		}
+		int n = 0;
+		PhraseMatch pm = PhraseMatch();
+		for (auto input : Synonyms) {
+			pm.Run(input, BZhash);
+			if (pm.resDoc[0] == EMPTY || pm.resDoc[0] == PHRASE_OVERFLOW) {
+			}
+			else {
+				for (string str : input) {
+					cout << str << " ";
+				}
+				cout << endl;
+				for (int i : pm.resDoc) {
+					cout << "doc " << i << " ";
+				}
+				cout << endl;
+			}
+		}
+		//printSyn();
 	}
 private:
-	void printSyn() {
+	vector<vector<string> > Synonyms;
+
+	/*void printSyn() {
 		for (auto syn : Synonyms) {
 			for (int i = 0; i < syn.size(); i++) {
 				cout << syn[i];
@@ -31,7 +50,7 @@ private:
 			}
 			cout << endl;
 		}
-	}
+	}*/
 
 	void findSyn() {
 		//python code: find synonyms with nltk
@@ -73,5 +92,5 @@ private:
 			Synonyms.emplace_back(tmpV);
 		}
 	}
-	vector<vector<string> > Synonyms;
+	
 };

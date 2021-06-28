@@ -9,7 +9,7 @@ void TOPK::Run(vector<string>& inputList, vector<pair<string, double> >* vectors
 		resDoc.emplace_back(ERROR);
 		return;
 	}
-	search( vectorspace);
+	search(vectorspace);
 	if (resDoc.empty())resDoc.push_back(EMPTY);
 }
 
@@ -35,7 +35,7 @@ bool TOPK::checkSyntax(vector<string>& inputList, vector<pair<string, double> >*
 	return true;
 }
 
-void TOPK::search( vector<pair<string, double> >* vectorspace) {
+void TOPK::search(vector<pair<string, double> >* vectorspace) {
 	resDoc.clear();
 	MxHeapHead = NULL;
 	/*cout << "---------TOPK debug----------" << endl;
@@ -61,7 +61,7 @@ void TOPK::search( vector<pair<string, double> >* vectorspace) {
 			double div = inputIDdiv;
 			double IDdiv = 0;
 			for (auto p : vectorspace[i]) {
-				double cos = p.second * FindTFIDF(vectorspace[inputID],p.first);
+				double cos = p.second * FindTFIDF(vectorspace[inputID], p.first);
 				score += cos;
 				IDdiv += (p.second * p.second);
 			}
@@ -72,7 +72,7 @@ void TOPK::search( vector<pair<string, double> >* vectorspace) {
 			cout << "div = " << div << endl;
 			cout << "score = " << score << endl;
 			cout << "doc" << i << " " << score << endl;*/
-			InsertHeap(i,score);
+			InsertHeap(i, score);
 		}
 	}
 	for (int i = 0; i < k; i++) {
@@ -89,7 +89,7 @@ double TOPK::FindTFIDF(vector<pair<string, double>>vector, string word) {
 	return 0;
 }
 
-void TOPK::InsertHeap(int docID,double score) {
+void TOPK::InsertHeap(int docID, double score) {
 	ScoreNode* p = MxHeapHead;
 	int docID_temp;
 	double score_temp;
@@ -159,7 +159,7 @@ int TOPK::PopHeap() {
 				subtree = -1;
 			}
 		}
-		else if(p->LeftNode == NULL && p->RightNode == NULL){
+		else if (p->LeftNode == NULL && p->RightNode == NULL) {
 			if (parent == NULL)MxHeapHead = NULL;
 			if (subtree == 1)parent->LeftNode = NULL;
 			if (subtree == -1) parent->RightNode = NULL;

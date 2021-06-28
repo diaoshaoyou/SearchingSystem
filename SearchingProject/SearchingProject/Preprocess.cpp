@@ -10,7 +10,8 @@ void Preprocess::Run() {
 	for (int i = 0; i < MAX_DOCNUM; i++) {
 		docLen[i] = -1;
 	}
-
+	clock_t startT, endT;
+	startT = clock();
 	fstream f("../InvertedIndex.txt", fstream::in);
 	bool flag = f.is_open();
 	//debug: cout << flag << endl;
@@ -24,7 +25,8 @@ void Preprocess::Run() {
 	createKgram();
 	BZhash = BlizzardHash();
 	BZhash.CreateHashTable(invertIdx);//set hash table
-	
+	endT = clock();
+	cout << "cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s ";
 	cout << "Prework done!" << endl << endl;
 }
 
@@ -32,8 +34,7 @@ void Preprocess::createInvertIdx() {
 	string word = string("");
 	int pos = 1;
 	vector<pair<string, int > > Doc;
-	clock_t startT, endT;
-	startT = clock();
+	
 	getFileNames("../DataBase", Doc);
 	TotalDoc = Doc.size();
 	for (auto doc : Doc) {
@@ -55,8 +56,6 @@ void Preprocess::createInvertIdx() {
 		docLen[doc.second] = pos - 1;
 		fin.close();
 	}
-	endT = clock();
-	cout << "cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s ";
 
 	//debug:
 	//*int max = 0;
@@ -167,7 +166,6 @@ void Preprocess::addNewDoc(WordNode p, int docID, int pos) {//add and sort docID
 	p->DocNum++;
 }
 void Preprocess::readInvertIdx() {
-	clock_t startT, endT;
 	string str;
 	string str1;
 	string w;//wordValue
@@ -176,7 +174,6 @@ void Preprocess::readInvertIdx() {
 	int firstPos = 1;
 	WordNode wLoc = NULL;
 
-	startT = clock();
 	fstream in("../InvertedIndex.txt", fstream::in);
 	in >> str;
 	TotalDoc = atoi(str.c_str());
@@ -228,8 +225,6 @@ void Preprocess::readInvertIdx() {
 
 	}
 	in.close();
-	endT = clock();
-	cout << "cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s ";
 	//for debug: print invertedIndex
 	/*cout << "docNum=" << TotalDoc << endl;
 	for (WordNode p = invertIdx; p != NULL; p = p->Next) {
@@ -301,7 +296,6 @@ void Preprocess::createKgram() {
 		InsertIdxtoKgram(p);
 		p = p->Next;
 	}
-
 	//debug
 	/*TwogramNode temp = Kgramhead;
 	while (temp != NULL) {
@@ -316,7 +310,7 @@ void Preprocess::InsertIdxtoKgram(WordNode& n) {
 	string word = n->WordVal;
 	word.insert(0, "$");
 	word.append("$");
-	//std::cout << word << endl;
+	//cout << word << endl;
 	while (!word._Equal("$")) {
 		string temp;
 		temp = word.substr(0, 2);
@@ -335,11 +329,7 @@ void Preprocess::InsertIdxtoKgram(WordNode& n) {
 }
 
 TwogramNode Preprocess::FindKgramNode(string word) {
-	/*TwogramNode p = Kgramhead;
-	while (p != NULL) {
-		if (p->Kgramword._Equal(word))return p;
-		p = p->Next;
-	}*/
+	if (int(word[0]) < 0 || int(word[0]) > 255 || int(word[1]) < 0 || int(word[1]) > 255)return NULL;
 	return KgramHash[int(word[0]) * 255 + int(word[1])];
 }
 
@@ -349,8 +339,7 @@ void Preprocess::createKgramNode(WordNode& n, string word) {
 	kgram_n->Kgramword = word;
 	kgram_n->wordNum = 1;
 	kgram_n->wordList[0] = n;
-	/*kgram_n->Next = Kgramhead;
-	Kgramhead = kgram_n;*/
+	if (int(word[0]) < 0 || int(word[0]) > 255 || int(word[1]) < 0 || int(word[1]) > 255)return;
 	KgramHash[int(word[0]) * 255 + int(word[1])] = kgram_n;
 }
 

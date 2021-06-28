@@ -1,33 +1,13 @@
 #include "global.h"
-#include "VSM.h"
-#include "BoolMatch.h"
-#include "PhraseMatch.h"
-#include "WildMatch.h"
-#include "SpellingCorrect.h"
-#include "CompressIndex.h"
-#include "SynExtend.h"
-#include "TopK.h"
+#include "Search.h"
+#include "Preprocess.h"
 using namespace std;
-enum {
-	Exit = 0,
-	Bool_Match = 1,
-	Wild_Match = 2,
-	Correct = 3,
-	TopK = 4,
-	Phrase_Match = 5,
-	Synonym = 6
-};
+
 void Readin(vector<string>& inputList);
 void PrintResult(vector<int>& res);
 void Up2Low(string& str);
 Preprocess prework = Preprocess();
-BoolMatch boolmatch = BoolMatch();
-PhraseMatch phrasematch = PhraseMatch();
-WildMatch wildmatch = WildMatch();
-SpellingCorrect spellingcorrect = SpellingCorrect();
-CompressIndex comIdx = CompressIndex();
-SynExtend synextend = SynExtend();
-TOPK topk = TOPK();
+Search mysearch = Search();
 int op = 0;
 int main() {
 	clock_t startT, endT;
@@ -43,26 +23,26 @@ int main() {
 		startT = clock();
 		switch (op) {
 		case Bool_Match:
-			boolmatch.Run(inputList, prework.BZhash);
-			PrintResult(boolmatch.resDoc);
+			mysearch.boolmatch->Run(inputList, prework.BZhash);
+			PrintResult(mysearch.boolmatch->resDoc);
 			break;
 		case Wild_Match:
-			wildmatch.Run(inputList, prework.KgramHash);
-			PrintResult(wildmatch.resDoc);
+			mysearch.wildmatch->Run(inputList, prework.KgramHash);
+			PrintResult(mysearch.wildmatch->resDoc);
 			break;
 		case Correct:
-			spellingcorrect.Run(inputList, prework.KgramHash);
+			mysearch.spellingcorrect->Run(inputList, prework.KgramHash);
 			break;
 		case TopK:
-			topk.Run(inputList, prework.vectorSpace);
-			PrintResult(topk.resDoc);
+			mysearch.topk->Run(inputList, prework.vectorSpace);
+			PrintResult(mysearch.topk->resDoc);
 			break;
 		case Phrase_Match:
-			phrasematch.Run(inputList, prework.BZhash);
-			PrintResult(phrasematch.resDoc);
+			mysearch.phrasematch->Run(inputList, prework.BZhash);
+			PrintResult(mysearch.phrasematch->resDoc);
 			break;
 		case Synonym:
-			synextend.Run(inputList);
+			mysearch.synextend->Run(inputList, prework.BZhash);
 			break;
 		case Exit:
 			exit = 1;
@@ -108,7 +88,7 @@ void PrintResult(vector<int>& res) {
 		cout << OverflowErr << endl;
 		return;
 	}
-	cout << "#Satisfying documents:" << endl;
+	cout << "#Satisfying documents:" << res.size() << endl;
 	if (res.at(0) == EMPTY) {
 		cout << "none";
 	}
