@@ -292,6 +292,8 @@ void Preprocess::createVectorSpace() {//use wf-idf
 		}
 	}*/
 }
+
+
 void Preprocess::createKgram() {
 	//create Kgram
 	WordNode p = invertIdx;
@@ -333,12 +335,12 @@ void Preprocess::InsertIdxtoKgram(WordNode& n) {
 }
 
 TwogramNode Preprocess::FindKgramNode(string word) {
-	TwogramNode p = Kgramhead;
+	/*TwogramNode p = Kgramhead;
 	while (p != NULL) {
 		if (p->Kgramword._Equal(word))return p;
 		p = p->Next;
-	}
-	return NULL;
+	}*/
+	return KgramHash[int(word[0]) * 255 + int(word[1])];
 }
 
 void Preprocess::createKgramNode(WordNode& n, string word) {
@@ -347,8 +349,9 @@ void Preprocess::createKgramNode(WordNode& n, string word) {
 	kgram_n->Kgramword = word;
 	kgram_n->wordNum = 1;
 	kgram_n->wordList[0] = n;
-	kgram_n->Next = Kgramhead;
-	Kgramhead = kgram_n;
+	/*kgram_n->Next = Kgramhead;
+	Kgramhead = kgram_n;*/
+	KgramHash[int(word[0]) * 255 + int(word[1])] = kgram_n;
 }
 
 bool Preprocess::KgramwordRepeat(WordNode& n, TwogramNode& kgram_n) {

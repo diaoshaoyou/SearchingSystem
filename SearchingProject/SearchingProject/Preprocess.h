@@ -24,7 +24,7 @@ public:
 	TwogramNode Kgramhead;//BTNode's head, first BTNode
 	vector<pair<string, double> >* vectorSpace;//docID=array's index, docID直接作为数组下标
 	BlizzardHash BZhash;
-
+	TwogramNode KgramHash[255 * 255];
 	Preprocess() {
 		invertIdx = NULL;
 		Kgramhead = NULL;

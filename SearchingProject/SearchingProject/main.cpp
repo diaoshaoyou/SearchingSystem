@@ -34,54 +34,57 @@ int main() {
 	prework.Run();
 	int exit = 0;
 	vector<string> inputList;
-	//while (1) {
-	cout << "#Choose your instruction:" << endl << "0. Exit 1.Bool match  2.Wild match  3.Spelling correct 4.TopK match 5.Phrase match  6.Synonym match" << endl << endl;
-	//	cin >> op;
-	//	cout << "#Input your query: ";//query ends with ;
-	Readin(inputList);
-	startT = clock();
-	switch (op) {
-	case Bool_Match:
-		boolmatch.Run(inputList, prework.BZhash);
-		PrintResult(boolmatch.resDoc);
-		break;
-	case Wild_Match:
-		wildmatch.Run(inputList, prework.Kgramhead);
-		PrintResult(wildmatch.resDoc);
-		break;
-	case Correct:
-		spellingcorrect.Run(inputList, prework.Kgramhead);
-		break;
-	case TopK:
-		topk.Run(inputList, prework.vectorSpace);
-		PrintResult(topk.resDoc);
-		break;
-	case Phrase_Match:
-		phrasematch.Run(inputList, prework.BZhash);
-		PrintResult(phrasematch.resDoc);
-		break;
-	case Synonym:
-		synextend.Run(inputList);
-		break;
-	case Exit:
-		exit = 1;
-		break;
-	default:
-		cout << InstErr << endl;
-		break;
+	while (1) {
+		cout << "#Choose your instruction:" << endl << "0. Exit 1.Bool match  2.Wild match  3.Spelling correct 4.TopK match 5.Phrase match  6.Synonym match" << endl << endl;
+		cin >> op;
+		cout << "#Input your query: ";//query ends with ;
+		Readin(inputList);
+		cout << "#searching..." << endl;
+		startT = clock();
+		switch (op) {
+		case Bool_Match:
+			boolmatch.Run(inputList, prework.BZhash);
+			PrintResult(boolmatch.resDoc);
+			break;
+		case Wild_Match:
+			wildmatch.Run(inputList, prework.KgramHash);
+			PrintResult(wildmatch.resDoc);
+			break;
+		case Correct:
+			spellingcorrect.Run(inputList, prework.KgramHash);
+			break;
+		case TopK:
+			topk.Run(inputList, prework.vectorSpace);
+			PrintResult(topk.resDoc);
+			break;
+		case Phrase_Match:
+			phrasematch.Run(inputList, prework.BZhash);
+			PrintResult(phrasematch.resDoc);
+			break;
+		case Synonym:
+			synextend.Run(inputList);
+			break;
+		case Exit:
+			exit = 1;
+			break;
+		default:
+			cout << InstErr << endl;
+			break;
+		}
+		if (exit) break;
+		endT = clock();
+		cout << "search cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s" << endl << endl;
 	}
-	//if (exit) break;
-	endT = clock();
-	cout << "search cost " << (double)(endT - startT) / CLOCKS_PER_SEC << "s" << endl;
-//}
 
 }
 void Readin(vector<string>& inputList) {
 	string str;
-	fstream query("../Query.txt", fstream::in);
-	query >> str;
-	op = atoi(str.c_str());
-	while (query >> str) {
+	inputList.clear();
+	//fstream query("../Query.txt", fstream::in);
+	//query >> str;
+	//op = atoi(str.c_str());
+	while (cin >> str) {
+		if (str._Equal(";")) break;
 		if (!str._Equal("NOT") && !str._Equal("OR") && !str._Equal("AND")) {
 			Up2Low(str);//to lower case
 		}

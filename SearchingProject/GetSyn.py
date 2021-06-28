@@ -8,10 +8,10 @@ from nltk.corpus import wordnet
 
 def main():
     fin=open("./Query.txt","r")
-    query=fin.read()
+    word=fin.read()
     fin.close()
-    arr=query.split("\n")
-    word=arr[1]
+#    arr=query.split("\n")
+#    word=arr[1]
     print(word)
     if(word=="" or word.find(' ') != -1):
         print("Error!")

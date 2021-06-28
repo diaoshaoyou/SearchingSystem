@@ -4,16 +4,16 @@ using namespace std;
 
 bool Comp(SpellingList p1, SpellingList p2);
 
-void SpellingCorrect::Run(vector<string>& inputList, TwogramNode Kgramhead) {
+void SpellingCorrect::Run(vector<string>& inputList, TwogramNode KgramHash[]) {
 	if (checkSyntax(inputList) == false) {//check basic syntax error
 		resWord.clear();
-		cout << "#Error: invalid instruction!"<<endl;
+		cout << "#Error: invalid instruction!" << endl;
 		return;
 	}
-	search(inputList, Kgramhead);
+	search(inputList, KgramHash);
 	if (resWord.empty()) cout << "EMPTY!!!" << endl;
 	else {
-		cout << "RESULT:"<<endl;
+		cout << "RESULT:" << endl;
 		for (node n : resWord) {
 			cout << n.WordVal << " ";
 		}
@@ -25,14 +25,14 @@ bool SpellingCorrect::checkSyntax(vector<string>& inputList) {
 	int preLetter = 0;//a-z
 	if (inputList.size() != 1)return false;
 	for (string in : inputList) {
-		for (int i = 0; i < in.length();i++) {
+		for (int i = 0; i < in.length(); i++) {
 			if (in[i] < 'a' && in[i] > 'z')return false;
 		}
 	}
 	return true;
 }
 
-void SpellingCorrect::search(vector<string>& inputList, TwogramNode Kgramhead) {
+void SpellingCorrect::search(vector<string>& inputList, TwogramNode KgramHash[]) {
 	resWord.clear();
 	memset(spellingList, 0, sizeof(SpellingList));
 	mindistance = -1;
@@ -41,11 +41,11 @@ void SpellingCorrect::search(vector<string>& inputList, TwogramNode Kgramhead) {
 		input.insert(0, "$");//Head add $
 		input.append("$");//tail add $
 		//cout << input << endl;
-		wordtokgram(input, Kgramhead);
+		wordtokgram(input, KgramHash);
 		if (spellingListNum == 0)return;
 		input = input.substr(1, input.size() - 2);
 		//sort and save top
-		sort(spellingList, spellingList+spellingListNum, Comp);
+		sort(spellingList, spellingList + spellingListNum, Comp);
 		SaveTop(spellingList[0]->frequency);
 		for (int i = 0; i < spellingListNum; i++) {//find min edit distance
 			int distance = EditDistance(input, spellingList[i]->word->WordVal);
@@ -58,7 +58,7 @@ void SpellingCorrect::search(vector<string>& inputList, TwogramNode Kgramhead) {
 			else if (distance == mindistance) resWord.push_back(*spellingList[i]->word);
 		}
 	}
-	
+
 	//debug
 	/*cout << "-----------------search debug----------------" << endl;
 	for (int i = 0; i < spellingListNum; i++)cout << spellingList[i]->word->WordVal << " " << spellingList[i]->frequency << endl;*/
@@ -66,16 +66,16 @@ void SpellingCorrect::search(vector<string>& inputList, TwogramNode Kgramhead) {
 
 }
 
-void SpellingCorrect::wordtokgram(string word, TwogramNode Kgramhead) {
+void SpellingCorrect::wordtokgram(string word, TwogramNode KgramHash[]) {
 	int len = word.size() - 2;
 	while (word.size() >= 2) {
 		string temp;
 		temp = word.substr(0, 2);
 		word = word.substr(1);
-		TwogramNode twogram_n = FindKgramNode(temp, Kgramhead);
+		TwogramNode twogram_n = FindKgramNode(temp, KgramHash);
 		if (twogram_n != NULL) {
-			for (int i = 0; i < twogram_n->wordNum; i++) 
-				if(abs(int(twogram_n->wordList[i]->WordVal.size()-len)) < 2){//The length difference between reserved and input word shall not exceed 1
+			for (int i = 0; i < twogram_n->wordNum; i++)
+				if (abs(int(twogram_n->wordList[i]->WordVal.size() - len)) < 2) {//The length difference between reserved and input word shall not exceed 1
 					int find = FindSpellingList(twogram_n->wordList[i]->WordVal);
 					if (find == -1) {
 						spellingList[spellingListNum] = new SpellingNode;
@@ -91,13 +91,8 @@ void SpellingCorrect::wordtokgram(string word, TwogramNode Kgramhead) {
 	//for (int i = 0; i < spellingListNum; i++)cout << spellingList[i]->word->WordVal << " " << spellingList[i]->frequency << endl;
 }
 
-TwogramNode SpellingCorrect::FindKgramNode(string word, TwogramNode Kgramhead) {
-	TwogramNode p = Kgramhead;
-	while (p != NULL) {
-		if (p->Kgramword._Equal(word))return p;
-		p = p->Next;
-	}
-	return NULL;
+TwogramNode SpellingCorrect::FindKgramNode(string word, TwogramNode KgramHash[]) {
+	return KgramHash[int(word[0]) * 255 + int(word[1])];
 }
 
 int SpellingCorrect::FindSpellingList(string word) {
@@ -110,13 +105,13 @@ int SpellingCorrect::FindSpellingList(string word) {
 
 bool Comp(SpellingList p1, SpellingList p2)
 {
-	return p2->frequency < p1->frequency ;
+	return p2->frequency < p1->frequency;
 }
 
 int SpellingCorrect::EditDistance(string input1, string input2) {
 	int dp[20][20];
-	for(int i = 0;i<=input1.size();i++)
-		for (int j = 0; j <=input2.size(); j++) {
+	for (int i = 0; i <= input1.size(); i++)
+		for (int j = 0; j <= input2.size(); j++) {
 			if (i == 0 && j == 0)dp[i][j] = 0;
 			else if (i == 0)dp[i][j] = dp[i][j - 1] + 1;
 			else if (j == 0)dp[i][j] = dp[i - 1][j] + 1;
@@ -124,7 +119,7 @@ int SpellingCorrect::EditDistance(string input1, string input2) {
 				dp[i][j] = dp[i][j - 1] + 1;
 				if (dp[i][j] > dp[i - 1][j] + 1)dp[i][j] = dp[i - 1][j] + 1;
 				int dpval = dp[i - 1][j - 1];
-				if (input1[i-1] != input2[j-1])dpval++;
+				if (input1[i - 1] != input2[j - 1])dpval++;
 				if (dp[i][j] > dpval)dp[i][j] = dpval;
 			}
 		}

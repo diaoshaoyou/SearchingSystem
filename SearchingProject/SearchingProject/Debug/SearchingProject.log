@@ -1,4 +1,37 @@
-﻿  Preprocess.cpp
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
-D:\00a\IR\SearchingSystem\SearchingProject\SearchingProject\Preprocess.cpp(274,25): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-  SearchingProject.vcxproj -> D:\00a\IR\SearchingSystem\SearchingProject\Debug\SearchingProject.exe
+﻿  BlizzardHash.cpp
+  BoolMatch.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+  main.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\VSM.h(31,26): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SpellingCorrect.h(4,1): warning C4005: “mx”: 宏重定义
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(3): message : 参见“mx”的前一个定义
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\CompressIndex.h(111,22): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SynExtend.h(27,22): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SynExtend.h(29,11): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SynExtend.h(59,21): warning C4018: “<”: 有符号/无符号不匹配
+  PhraseMatch.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\PhraseMatch.cpp(106,20): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\PhraseMatch.cpp(110,22): warning C4018: “<”: 有符号/无符号不匹配
+  Preprocess.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.cpp(274,25): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  SpellingCorrect.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SpellingCorrect.h(4,1): warning C4005: “mx”: 宏重定义
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(3): message : 参见“mx”的前一个定义
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SpellingCorrect.cpp(28,21): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SpellingCorrect.cpp(113,20): warning C4018: “<=”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\SpellingCorrect.cpp(114,21): warning C4018: “<=”: 有符号/无符号不匹配
+  TopK.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\TopK.cpp(21,20): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\TopK.cpp(30,20): warning C4018: “<”: 有符号/无符号不匹配
+  WildMatch.cpp
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\Preprocess.h(18,2): warning C4091: “typedef ”: 没有声明变量时忽略“KgramNode”的左侧
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\WildMatch.cpp(21,21): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\wenji\Desktop\SearchingProject\SearchingProject\WildMatch.cpp(47,21): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
+  LINK : 没有找到 C:\Users\wenji\Desktop\SearchingProject\Debug\SearchingProject.exe 或上一个增量链接没有生成它；正在执行完全链接
+  SearchingProject.vcxproj -> C:\Users\wenji\Desktop\SearchingProject\Debug\SearchingProject.exe

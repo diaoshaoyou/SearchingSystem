@@ -4,7 +4,7 @@
 
 Windows10
 
-VS2019  debug模式，x86
+VS2019  debug模式，x64
 
 ## 文件结构
 
@@ -31,7 +31,11 @@ VS2019  debug模式，x86
 
 #### Query.txt
 
-输入一个查询方式+查询语句。为了方便调试，输入用读文件，main中注释掉while循环。
+输入一个要查询的单词，GetSyn.py从这读取，方便后续生成同义词
+
+#### Synonym.txt
+
+存储GetSyn.py输出的某个词的同义词
 
 ## 功能
 
@@ -47,7 +51,7 @@ phrase match：短语查询
 
 synonym match：同义词查询
 
-老师要求的内容似乎不止这些，再加。。。
+
 
 ## 倒排索引
 
@@ -82,6 +86,23 @@ DocList：实则是个二维数组，每个元素vector<int>存文件ID和所在
 | 1      | 1,2      |
 | 5      | 3,10     |
 | 6      | 4        |
+
+
+
+## 词典索引
+
+实现“word”->WordNode
+
+用暴雪哈希算法，最大可能降低冲突概率。Hash1, Hash2, Hash3为某word计算得到的哈希值，只有三者相同才能算同一个word，否则顺延填入后续的空位中。PWord存对应word的倒排索引指针，方便定位到它的docID、pos等性质。
+
+```c++
+struct Hashnode{
+    unsigned int Hash1;
+    unsigned int Hash2;
+    unsigned int Hash3;
+    WordNode PWord;//倒排索引指针
+};
+```
 
 
 
@@ -142,7 +163,21 @@ docID的压缩：每个单词中，存第一个ID、该ID与前一个的差值�
 
 单词位置未进行压缩
 
+
+
 ## 布尔查询
+
+#### 原理
+
+1、把查询语句变成后缀表达式，把每个单词转变成对应的vector<int> docID。操作符优先级：NOT > AND > OR
+
+2、解析后缀表达式
+
+AND：获取docID1和docID2共有的文档 ID
+
+OR：获取docID1和docID2的交集
+
+NOT：用总文档ID-对应docID
 
 #### 输入
 
@@ -157,17 +192,85 @@ COCOA OR shower AND NOT nnn
 
 
 
-## 同义词扩展
+## 通配符查询
 
 #### 输入
 
-在Query.txt输入命令+需要扩展的单词
+操作符有：*
 
 输入样例：
 
 ```c
-6
-bank
+2
+ne*t*ve
+```
+
+首先利用轮排索引去查找相关词项
+
+再对每个词项进行检查把不符合的词项去除
+
+
+
+## 拼写矫正
+
+#### 输入
+
+在Query.txt输入命令+需要矫正的单词
+
+输入样例：
+
+```c
+3
+coen
+```
+
+首先利用轮排索引去查找相关词项
+
+再对每个轮排索引进行AND操作找出重复率
+
+最后再对重复率最高的词项再对它计算编辑距离
+
+
+
+## 基于快速评分的Top K查询
+
+#### 输入
+
+在Query.txt输入命令+所需要的前K个文档和"doc"輸入文档数字
+
+输入样例：
+
+```c
+4
+10 doc100
+```
+
+对每个文件遍序所有词项计算余弦值
+
+再用最大堆输出前K个的文档
+
+
+
+## 同义词扩展
+
+#### 原理
+
+用nltk库获取对应单词的同义词
+
+```python
+from nltk.corpus import wordnet
+```
+
+![image-20210628100352022](img/image-20210628100352022.png)
+
+#### 输入
+
+输入需要扩展的单词
+
+输入样例：
+
+```c
+review
 ```
 
 #### 运行
@@ -175,19 +278,6 @@ bank
 先运行``GetSyn.py``获取同义词集合，存在``Synonym.txt``中。再运行C++代码进行查询/输出同义词(组)
 
 
-
-## 词典索引
-
-用暴雪哈希算法，最大可能降低冲突概率。Hash1, Hash2, Hash3为某word计算得到的哈希值，只有三者相同才能算同一个word，否则顺延填入后续的空位中。PWord存对应word的倒排索引指针，方便定位到它的docID、pos等性质。
-
-```c++
-struct Hashnode{
-    unsigned int Hash1;
-    unsigned int Hash2;
-    unsigned int Hash3;
-    WordNode PWord;//倒排索引指针
-};
-```
 
 
 

@@ -53,6 +53,7 @@ void TOPK::search( vector<pair<string, double> >* vectorspace) {
 		inputIDdiv += (p.second * p.second);
 	}
 	inputIDdiv = sqrt(inputIDdiv);
+	if (inputIDdiv == 0)return;
 	double score = 0;
 	for (int i = 0; i < MAX_DOCNUM; i++) {
 		if (i != inputID && !vectorspace[i].empty()) {
@@ -64,9 +65,13 @@ void TOPK::search( vector<pair<string, double> >* vectorspace) {
 				score += cos;
 				IDdiv += (p.second * p.second);
 			}
-			div = IDdiv * inputIDdiv;
+			if (IDdiv == 0)continue;
+			div = sqrt(IDdiv) * inputIDdiv;
 			score = score / div;
-			cout << "doc" << i << " " << score << endl;
+			/*cout << "inputdiv = " << inputIDdiv << endl;
+			cout << "div = " << div << endl;
+			cout << "score = " << score << endl;
+			cout << "doc" << i << " " << score << endl;*/
 			InsertHeap(i,score);
 		}
 	}

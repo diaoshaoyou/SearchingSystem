@@ -20,7 +20,7 @@ void PhraseMatch::Run(vector<string>& inputList, BlizzardHash& BZhash) {
 	
 	for (int i = 0; i < n; i++) {
 		pwords[i] = BZhash.GetWordNode(inputList[i]);
-		if (pwords != NULL) {
+		if (pwords[i] != NULL) {
 			find++;
 		}
 	}
@@ -94,6 +94,7 @@ bool PhraseMatch::inSameDoc(WordNode pwords[], vector<int> sameDocIdx[], int n) 
 				resDoc.emplace_back(*iter);
 			}
 			iter++;
+			tmpNum = 0;
 		}
 		if (resDoc.empty()) return false;//in same doc & but not in order
 		else return true;

@@ -9,7 +9,7 @@ enum {
 struct SpellingNode {
 	struct node* word;
 	int frequency;
-}; 
+};
 typedef SpellingNode* SpellingList;
 
 class SpellingCorrect {
@@ -18,7 +18,7 @@ public:
 
 	SpellingCorrect() { };
 	~SpellingCorrect() {};
-	void Run(vector<string>& inputList, TwogramNode Kgramhead);//start bool search
+	void Run(vector<string>& inputList, TwogramNode KgramHash[]);//start bool search
 
 private:
 	SpellingList spellingList[mx];
@@ -27,9 +27,9 @@ private:
 
 	bool checkSyntax(vector<string>& inputList);//check basic syntax error
 
-	void search(vector<string>& inputList, TwogramNode Kgramhead);//search database using post expression
-	void wordtokgram(string word, TwogramNode Kgramhead);//turn word into 2-gram 
-	TwogramNode FindKgramNode(string word, TwogramNode Kgramhead);
+	void search(vector<string>& inputList, TwogramNode KgramHash[]);//search database using post expression
+	void wordtokgram(string word, TwogramNode KgramHash[]);//turn word into 2-gram 
+	TwogramNode FindKgramNode(string word, TwogramNode KgramHash[]);
 
 	int FindSpellingList(string word);
 	int EditDistance(string input1, string input2);
